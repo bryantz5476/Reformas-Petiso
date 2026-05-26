@@ -171,7 +171,7 @@ export default function HeroSection() {
       <div className="flex flex-col md:flex-row min-h-[100dvh]">
 
         {/* LEFT PANEL */}
-        <div className="relative z-10 flex flex-col justify-end pb-20 px-12 md:px-24 pt-32 md:pt-0 w-full md:w-[55%] bg-[#060b14]">
+        <div className="relative z-10 flex flex-col justify-end pb-16 px-6 md:px-24 pt-28 md:pt-0 w-full md:w-[55%] bg-[#060b14]">
 
           {/* Decorative oversized background label */}
           <div
@@ -197,7 +197,7 @@ export default function HeroSection() {
             variants={wipeVariants}
             initial="hidden"
             animate="visible"
-            className="text-xs uppercase tracking-[0.35em] text-slate-400 mb-6"
+            className="text-xs uppercase tracking-[0.2em] md:tracking-[0.35em] text-slate-400 mb-6 whitespace-nowrap"
           >
             Arquitectura de Interiores
           </motion.p>
@@ -258,13 +258,11 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.7, duration: 0.8 }}
-            className="flex items-center gap-10 border-t border-white/10 pt-8"
+            className="grid grid-cols-3 gap-4 border-t border-white/10 pt-8"
           >
-            <StatCounter end={15} label="Años de experiencia" />
-            <div className="w-px h-10 bg-white/10" />
-            <StatCounter end={320} label="Proyectos completados" />
-            <div className="w-px h-10 bg-white/10" />
-            <StatCounter end={100} label="Clientes satisfechos" suffix="%" />
+            <StatCounter end={15} label="Años" />
+            <StatCounter end={320} label="Proyectos" />
+            <StatCounter end={100} label="Satisfacción" suffix="%" />
           </motion.div>
         </div>
 

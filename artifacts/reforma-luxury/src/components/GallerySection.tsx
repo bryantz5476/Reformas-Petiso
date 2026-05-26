@@ -20,7 +20,7 @@ export default function GallerySection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[300px] gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[300px] gap-3 md:gap-6">
           {projects.map((project, i) => (
             <motion.div
               key={i}
