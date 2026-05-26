@@ -21,8 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { submitContact } from "@workspace/api-client-react";
-import type { ContactRequest } from "@workspace/api-client-react";
+import { submitContact } from "@/lib/api";
+import type { ContactRequest } from "@/lib/api";
 
 const TIPO_VALORES = ["Cocina", "Baño", "Integral", "Otro"] as const;
 

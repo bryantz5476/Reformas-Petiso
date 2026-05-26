@@ -1,6 +1,7 @@
 [build]
-  command = "npm install -g pnpm && pnpm install --frozen-lockfile && pnpm --filter @workspace/reforma-luxury run build"
-  publish = "artifacts/reforma-luxury/dist"
+  base = "artifacts/reforma-luxury"
+  command = "npm run build"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"
