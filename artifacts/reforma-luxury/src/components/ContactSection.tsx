@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -52,8 +51,6 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function ContactSection() {
   const { toast } = useToast();
-  // Honeypot controlado fuera de React Hook Form para que no interfiera con la validación
-  const [honeypot, setHoneypot] = useState("");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -67,9 +64,6 @@ export default function ContactSection() {
 
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => {
-      // Honeypot: descarte silencioso si el campo oculto tiene valor (bot)
-      if (honeypot.length > 0) return;
-
       await emailjs.send(
         "service_irhu644",
         "template_6jeacyk",
@@ -119,28 +113,6 @@ export default function ContactSection() {
         <div className="bg-card border border-border/50 rounded-3xl p-8 md:p-12 shadow-2xl">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
-              {/* Honeypot anti-bot: off-screen, los bots lo rellenan, los humanos no lo ven */}
-              <div
-                style={{
-                  position: "absolute",
-                  left: "-9999px",
-                  width: "1px",
-                  height: "1px",
-                  overflow: "hidden",
-                  opacity: 0,
-                  pointerEvents: "none",
-                }}
-              >
-                <input
-                  type="text"
-                  name="website"
-                  value={honeypot}
-                  onChange={(e) => setHoneypot(e.target.value)}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <FormField
