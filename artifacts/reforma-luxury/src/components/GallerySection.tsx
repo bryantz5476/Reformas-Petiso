@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 
 const projects = [
-  { img: "/images/gallery-1.png", title: "Cocina Slate", location: "Madrid Centro", className: "col-span-1 row-span-1 md:col-span-2 md:row-span-2" },
-  { img: "/images/gallery-2.png", title: "Baño Onyx", location: "Marbella", className: "col-span-1 row-span-1" },
-  { img: "/images/gallery-3.png", title: "Salón Zenith", location: "Barcelona", className: "col-span-1 row-span-1" },
-  { img: "/images/gallery-4.png", title: "Comedor Aura", location: "Ibiza", className: "col-span-1 row-span-1 md:col-span-2" },
-  { img: "/images/gallery-5.png", title: "Isla Pure", location: "Valencia", className: "col-span-1 row-span-1" },
-  { img: "/images/gallery-6.png", title: "Suite Nocturne", location: "Mallorca", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery-1.png", title: "Cocina Slate", location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1 md:col-span-2 md:row-span-2" },
+  { img: "/images/gallery-2.png", title: "Baño Onyx", location: "Bilbao", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery-3.png", title: "Salón Zenith", location: "Vitoria", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery-4.png", title: "Comedor Aura", location: "Álava", className: "col-span-1 row-span-1 md:col-span-2" },
+  { img: "/images/gallery-5.png", title: "Cocina Pure", location: "Bilbao", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery-6.png", title: "Suite Nocturne", location: "Vitoria", className: "col-span-1 row-span-1" },
 ];
 
 export default function GallerySection() {

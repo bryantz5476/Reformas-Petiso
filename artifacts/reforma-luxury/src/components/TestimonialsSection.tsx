@@ -5,25 +5,25 @@ const testimonials = [
   {
     quote: "La atención al detalle es asombrosa. Transformaron nuestro apartamento en una verdadera obra de arte arquitectónica.",
     name: "Elena M.",
-    project: "Reforma Integral · Madrid",
+    project: "Reforma Integral · Vitoria",
     index: "01",
   },
   {
     quote: "Profesionalismo de principio a fin. Materiales de una calidad exquisita y un diseño que supera nuestras expectativas diarias.",
     name: "Javier R.",
-    project: "Cocina de Diseño · Barcelona",
+    project: "Cocina de Diseño · Bilbao",
     index: "02",
   },
   {
     quote: "Entendieron perfectamente nuestra visión y la ejecutaron con precisión milimétrica. El resultado es sencillamente perfecto.",
     name: "Sofía V.",
-    project: "Baño de Lujo · Marbella",
+    project: "Baño de Lujo · Vitoria",
     index: "03",
   },
   {
     quote: "Un equipo que no hace concesiones con la calidad. La inversión ha valido cada céntimo. Resultado impecable.",
     name: "Carlos T.",
-    project: "Reforma Integral · Ibiza",
+    project: "Reforma Integral · Álava",
     index: "04",
   },
 ];

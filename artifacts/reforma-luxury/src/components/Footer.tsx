@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-background py-12 px-6 md:px-12 border-t border-border/30">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="text-2xl font-serif font-bold tracking-wider uppercase text-white">
-          Estudio V
+          Reformas Petiso
         </div>
         
         <div className="flex gap-8 text-sm font-medium tracking-widest text-muted-foreground uppercase">
@@ -29,7 +29,7 @@ export default function Footer() {
       </div>
       
       <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground/50">
-        <p>&copy; {new Date().getFullYear()} Estudio V Arquitectura. Todos los derechos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} Reformas Petiso. Todos los derechos reservados.</p>
         <p className="mt-2 md:mt-0">Diseñado con precisión.</p>
       </div>
     </footer>
