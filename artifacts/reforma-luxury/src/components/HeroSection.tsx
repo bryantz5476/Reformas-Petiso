@@ -1,154 +1,318 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, animate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 
-const text = "Arquitectura de Lujo";
+function StatCounter({ end, label, suffix = "+" }: { end: number; label: string; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const controls = animate(0, end, {
+            duration: 2,
+            ease: "easeOut",
+            onUpdate: (v) => setCount(Math.floor(v)),
+          });
+          return () => controls.stop();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end]);
+
+  return (
+    <div ref={ref} className="flex flex-col">
+      <span className="text-3xl md:text-4xl font-serif font-bold text-white tabular-nums">
+        {count}{suffix}
+      </span>
+      <span className="text-xs uppercase tracking-[0.2em] text-slate-400 mt-1">{label}</span>
+    </div>
+  );
+}
+
+const GlareButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
+  const x = useMotionValue(0);
+  const [hovered, setHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set(e.clientX - rect.left);
+  };
+
+  return (
+    <motion.a
+      href={href}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onMouseMove={handleMouseMove}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      className="relative overflow-hidden inline-flex items-center gap-3 bg-white text-black px-8 py-4 font-medium text-sm tracking-widest uppercase rounded-full cursor-pointer"
+      data-testid="link-hero-cta"
+      style={{ position: "relative" }}
+    >
+      <span className="relative z-10 flex items-center gap-3">
+        {children}
+        <ArrowRight size={16} />
+      </span>
+      {hovered && (
+        <motion.div
+          className="absolute top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/70 to-transparent pointer-events-none"
+          style={{ left: x }}
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 40 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        />
+      )}
+    </motion.a>
+  );
+};
 
 export default function HeroSection() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+
+  const { scrollY } = useScroll();
+  const imageY = useTransform(scrollY, [0, 600], [0, 80]);
+  const imageScale = useTransform(scrollY, [0, 600], [1, 1.08]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const letters = Array.from(text);
+  const lineVariants = {
+    hidden: { scaleX: 0, originX: 0 },
+    visible: { scaleX: 1, transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.2 } },
+  };
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: (i = 1) => ({
-      opacity: 1,
-      transition: { staggerChildren: 0.08, delayChildren: 0.3 * i },
+  const wipeVariants = {
+    hidden: { clipPath: "inset(0 100% 0 0)" },
+    visible: (delay: number) => ({
+      clipPath: "inset(0 0% 0 0)",
+      transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay },
     }),
   };
 
-  const child = {
+  const imageReveal = {
+    hidden: { clipPath: "inset(100% 0 0 0)" },
     visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      rotateX: 0,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 50,
-      scale: 0.8,
-      rotateX: 90,
+      clipPath: "inset(0% 0 0 0)",
+      transition: { duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.1 },
     },
   };
 
   return (
-    <section className="relative min-h-[100dvh] w-full overflow-hidden bg-background text-foreground flex flex-col justify-center items-center">
+    <section
+      ref={containerRef}
+      className="relative min-h-[100dvh] w-full overflow-hidden bg-[#060b14] text-foreground flex flex-col"
+    >
       {/* Navbar */}
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled ? "bg-background/70 backdrop-blur-md border-b border-border/50 py-4" : "bg-transparent py-6"
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          isScrolled
+            ? "bg-[#060b14]/80 backdrop-blur-xl border-b border-white/5 py-4"
+            : "bg-transparent py-7"
         }`}
       >
-        <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
-          <div className="text-xl font-serif font-bold tracking-wider uppercase">
+        <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.8, duration: 0.6 }}
+            className="text-sm font-serif font-bold tracking-[0.3em] uppercase text-white"
+          >
             Estudio V
-          </div>
-          
-          <div className="hidden md:flex space-x-8 text-sm font-medium tracking-wide">
-            <a href="#servicios" className="hover:text-primary transition-colors">Servicios</a>
-            <a href="#proyectos" className="hover:text-primary transition-colors">Proyectos</a>
-            <a href="#contacto" className="hover:text-primary transition-colors">Contacto</a>
-          </div>
+          </motion.div>
 
-          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)} data-testid="button-menu-toggle">
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 0.6 }}
+            className="hidden md:flex items-center space-x-10 text-xs font-medium tracking-[0.2em] uppercase text-slate-300"
+          >
+            <a href="#servicios" className="hover:text-white transition-colors duration-200">Servicios</a>
+            <a href="#proyectos" className="hover:text-white transition-colors duration-200">Proyectos</a>
+            <a href="#contacto" className="hover:text-white transition-colors duration-200">Contacto</a>
+          </motion.div>
+
+          <button
+            className="md:hidden text-white"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            data-testid="button-menu-toggle"
+          >
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm flex flex-col items-center justify-center space-y-8 text-2xl font-serif">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-40 bg-[#060b14]/98 backdrop-blur-sm flex flex-col items-center justify-center space-y-10 text-2xl font-serif text-white"
+        >
           <a href="#servicios" onClick={() => setIsMenuOpen(false)}>Servicios</a>
           <a href="#proyectos" onClick={() => setIsMenuOpen(false)}>Proyectos</a>
           <a href="#contacto" onClick={() => setIsMenuOpen(false)}>Contacto</a>
-        </div>
+        </motion.div>
       )}
 
-      {/* Background Orbs */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-full h-full backdrop-blur-[100px] z-10" />
-        <motion.div
-          className="absolute top-[20%] left-[20%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[80px]"
-          animate={{
-            x: [0, 100, -50, 0],
-            y: [0, -100, 50, 0],
-            scale: [1, 1.2, 0.8, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-blue-900/20 rounded-full blur-[100px]"
-          animate={{
-            x: [0, -150, 50, 0],
-            y: [0, 100, -100, 0],
-            scale: [1, 0.8, 1.1, 1],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
+      {/* Main layout: split screen */}
+      <div className="flex flex-col md:flex-row min-h-[100dvh]">
 
-      {/* Content */}
-      <div className="relative z-20 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
-        <motion.div
-          className="flex flex-wrap justify-center overflow-hidden mb-6"
-          variants={container}
-          initial="hidden"
-          animate="visible"
-        >
-          {letters.map((letter, index) => (
-            <motion.span
-              key={index}
-              variants={child}
-              className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tight"
-              style={{ display: "inline-block", paddingRight: letter === " " ? "0.3em" : "0" }}
+        {/* LEFT PANEL */}
+        <div className="relative z-10 flex flex-col justify-end pb-20 px-8 md:px-16 pt-32 md:pt-0 w-full md:w-[55%] bg-[#060b14]">
+
+          {/* Decorative oversized background label */}
+          <div
+            className="absolute top-[50%] left-8 md:left-14 -translate-y-1/2 text-[clamp(5rem,15vw,13rem)] font-serif font-bold text-white/[0.03] pointer-events-none select-none leading-none"
+            aria-hidden
+          >
+            REFORMA
+          </div>
+
+          {/* Accent line */}
+          <div className="mb-12">
+            <motion.div
+              className="h-px bg-gradient-to-r from-slate-400 to-transparent w-32"
+              variants={lineVariants}
+              initial="hidden"
+              animate="visible"
+            />
+          </div>
+
+          {/* Pre-label */}
+          <motion.p
+            custom={0.4}
+            variants={wipeVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-xs uppercase tracking-[0.35em] text-slate-400 mb-6"
+          >
+            Arquitectura de Interiores
+          </motion.p>
+
+          {/* Main headline */}
+          <div className="overflow-hidden mb-3">
+            <motion.h1
+              custom={0.55}
+              variants={wipeVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-[clamp(3.2rem,7vw,6rem)] font-serif font-bold text-white leading-[1.05] tracking-tight"
             >
-              {letter}
-            </motion.span>
-          ))}
-        </motion.div>
+              Espacios
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden mb-10">
+            <motion.h1
+              custom={0.75}
+              variants={wipeVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-[clamp(3.2rem,7vw,6rem)] font-serif font-bold leading-[1.05] tracking-tight"
+              style={{
+                background: "linear-gradient(135deg, #c8d4e8 0%, #7a9cc4 40%, #e2e8f0 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Singulares.
+            </motion.h1>
+          </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="text-lg md:text-2xl text-muted-foreground font-light max-w-2xl mx-auto mb-12"
-        >
-          Transformamos espacios en experiencias inmersivas. Perfección en cada detalle, textura y acabado.
-        </motion.p>
+          {/* Subline */}
+          <motion.p
+            custom={1}
+            variants={wipeVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-slate-400 font-light text-base md:text-lg max-w-md leading-relaxed mb-14"
+          >
+            Transformamos cada espacio en una experiencia. Perfección en cada
+            material, textura y acabado desde la primera reunión hasta la entrega.
+          </motion.p>
 
-        <motion.a
-          href="#contacto"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2.5, duration: 0.5 }}
-          className="relative overflow-hidden group bg-white text-black px-8 py-4 rounded-full font-medium text-lg tracking-wide transition-transform hover:scale-105"
-          data-testid="link-hero-cta"
-        >
-          <span className="relative z-10">Inicia tu Proyecto</span>
-          <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/80 to-transparent group-hover:animate-[glare_1s_ease-in-out_infinite]" />
-          <style>{`
-            @keyframes glare {
-              100% { transform: translateX(100%); }
-            }
-          `}</style>
-        </motion.a>
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
+            className="mb-20"
+          >
+            <GlareButton href="#contacto">Inicia tu Proyecto</GlareButton>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.7, duration: 0.8 }}
+            className="flex items-center gap-10 border-t border-white/10 pt-8"
+          >
+            <StatCounter end={15} label="Años de experiencia" />
+            <div className="w-px h-10 bg-white/10" />
+            <StatCounter end={320} label="Proyectos completados" />
+            <div className="w-px h-10 bg-white/10" />
+            <StatCounter end={100} label="Clientes satisfechos" suffix="%" />
+          </motion.div>
+        </div>
+
+        {/* RIGHT PANEL — image */}
+        <div className="relative w-full md:w-[45%] min-h-[50vh] md:min-h-[100dvh] overflow-hidden">
+          <motion.div
+            variants={imageReveal}
+            initial="hidden"
+            animate="visible"
+            className="absolute inset-0"
+          >
+            <motion.img
+              src="/images/gallery-1.png"
+              alt="Proyecto de reforma de lujo"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ y: imageY, scale: imageScale }}
+            />
+            {/* Dark gradient overlays */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#060b14] via-transparent to-transparent md:via-[#060b14]/10" />
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#060b14]/60 to-transparent" />
+          </motion.div>
+
+          {/* Floating location pill */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.6 }}
+            className="absolute bottom-10 left-6 md:left-8 z-10 bg-black/40 backdrop-blur-md border border-white/10 rounded-full px-5 py-2.5 text-xs tracking-[0.2em] uppercase text-slate-300"
+          >
+            Madrid · Barcelona · Marbella
+          </motion.div>
+        </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] tracking-[0.3em] uppercase text-slate-500">Scroll</span>
+        <motion.div
+          className="w-px h-10 bg-gradient-to-b from-slate-500 to-transparent"
+          animate={{ scaleY: [0, 1, 0], originY: 0 }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
     </section>
   );
 }
