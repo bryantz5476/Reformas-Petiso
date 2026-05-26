@@ -63,19 +63,19 @@ export default function ContactSection() {
 
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => {
-      const body = new URLSearchParams({
-        "form-name": "contact",
-        nombre:  data.nombre,
-        email:   data.email,
-        tipo:    data.tipo,
-        mensaje: data.mensaje,
-      });
-      const res = await fetch("/", {
+      const res = await fetch("https://formspree.io/f/xaqklqvk", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: body.toString(),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          nombre:  data.nombre,
+          email:   data.email,
+          tipo:    data.tipo,
+          mensaje: data.mensaje,
+        }),
       });
       if (!res.ok) throw new Error(`Error ${res.status}`);
+      const json = await res.json() as { ok: boolean };
+      if (!json.ok) throw new Error("Formspree error");
     },
     onSuccess: () => {
       toast({
