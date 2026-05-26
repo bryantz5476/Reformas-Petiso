@@ -124,25 +124,27 @@ export default function HeroSection() {
             : "bg-transparent backdrop-blur-none border-transparent py-7"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-8 flex items-center justify-between h-10">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.8, duration: 0.6 }}
-            className="text-xs font-sans font-medium tracking-[0.18em] uppercase text-white/90"
+            className="flex items-center h-full"
           >
-            Reformas Petiso
+            <span className="text-xs font-sans font-medium tracking-[0.18em] uppercase text-white/90 leading-none">
+              Reformas Petiso
+            </span>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 0.6 }}
-            className="hidden md:flex items-center space-x-10 text-xs font-medium tracking-[0.2em] uppercase text-slate-300"
+            className="hidden md:flex items-center h-full space-x-10 text-xs font-medium tracking-[0.2em] uppercase text-slate-300"
           >
-            <a href="#servicios" className="hover:text-white transition-colors duration-200">Servicios</a>
-            <a href="#proyectos" className="hover:text-white transition-colors duration-200">Proyectos</a>
-            <a href="#contacto" className="hover:text-white transition-colors duration-200">Contacto</a>
+            <a href="#servicios" className="hover:text-white transition-colors duration-200 leading-none">Servicios</a>
+            <a href="#proyectos" className="hover:text-white transition-colors duration-200 leading-none">Proyectos</a>
+            <a href="#contacto" className="hover:text-white transition-colors duration-200 leading-none">Contacto</a>
           </motion.div>
 
           <button
