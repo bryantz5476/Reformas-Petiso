@@ -9,7 +9,6 @@ const services = [
     subtitle: "Gastronomía & Estética",
     description:
       "Espacios culinarios donde la funcionalidad se funde con la alta estética. Encimeras de piedra natural, cabinetería a medida y electrodomésticos de alta gama perfectamente integrados.",
-    price: "Desde 25.000 €",
     brands: ["Porcelanosa", "Silestone", "Bulthaup", "Gaggenau"],
     image: "/images/gallery-1.png",
   },
@@ -19,7 +18,6 @@ const services = [
     subtitle: "Bienestar & Ritual",
     description:
       "Santuarios de bienestar privados. Piedra natural, iluminación arquitectónica indirecta y grifería de autor que convierte cada mañana en un ritual de precisión y serenidad.",
-    price: "Desde 15.000 €",
     brands: ["Hansgrohe", "Laufen", "Dornbracht", "Duravit"],
     image: "/images/gallery-2.png",
   },
@@ -29,7 +27,6 @@ const services = [
     subtitle: "Transformación Total",
     description:
       "Rediseño completo del hogar. Redistribución de espacios, optimización de luz natural, instalaciones de nueva generación y acabados inmaculados. Del plano a la llave en manos.",
-    price: "Proyectos a medida",
     brands: ["Arquitectura", "Interiorismo", "Gestión", "Llave en mano"],
     image: "/images/gallery-3.png",
   },
@@ -134,10 +131,7 @@ export default function ServicesSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#080d16] via-[#080d16]/20 to-transparent" />
 
-                  {/* Price badge */}
-                  <div className="absolute top-6 right-6 bg-black/50 backdrop-blur-md border border-white/10 rounded-full px-4 py-2 text-xs tracking-widest uppercase text-white">
-                    {current.price}
-                  </div>
+
                 </div>
 
                 {/* Text bottom */}
