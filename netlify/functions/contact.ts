@@ -46,14 +46,14 @@ function buildEmailHtml(data: {
 
   return `<!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"/><title>Nueva Solicitud — Reformas Petiso</title></head>
+<head><meta charset="UTF-8"/><title>Nueva Solicitud — Reformas Petizo</title></head>
 <body style="margin:0;padding:0;background-color:#f4f4f4;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f4;padding:40px 20px;">
   <tr><td align="center">
     <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
       <tr><td style="background-color:#0a0f18;border-radius:12px 12px 0 0;padding:36px 48px;text-align:center;">
         <p style="margin:0;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#9ca3af;">ESTUDIO DE REFORMAS</p>
-        <h1 style="margin:8px 0 0;font-size:28px;font-weight:700;color:#ffffff;">Reformas Petiso</h1>
+        <h1 style="margin:8px 0 0;font-size:28px;font-weight:700;color:#ffffff;">Reformas Petizo</h1>
         <p style="margin:4px 0 0;font-size:12px;color:#6b7280;letter-spacing:2px;">VITORIA-GASTEIZ · BILBAO</p>
       </td></tr>
       <tr><td style="background-color:${color};padding:12px 48px;">
@@ -103,7 +103,7 @@ function buildEmailHtml(data: {
           <p style="margin:0;font-size:15px;color:#374151;line-height:1.8;white-space:pre-wrap;">${escapeHtml(data.mensaje)}</p>
         </div>
         <table width="100%"><tr><td align="center">
-          <a href="mailto:${escapeHtml(data.email)}?subject=Re:%20Solicitud%20${encodeURIComponent(data.tipo)}%20%7C%20Reformas%20Petiso&body=Hola%20${encodeURIComponent(data.nombre)}%2C%0A%0A"
+          <a href="mailto:${escapeHtml(data.email)}?subject=Re:%20Solicitud%20${encodeURIComponent(data.tipo)}%20%7C%20Reformas%20Petizo&body=Hola%20${encodeURIComponent(data.nombre)}%2C%0A%0A"
              style="display:inline-block;background-color:${color};color:#ffffff;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:14px 40px;border-radius:8px;">
             ✉️ &nbsp;Responder a ${escapeHtml(data.nombre)}
           </a>
@@ -212,10 +212,10 @@ export default async function handler(req: Request): Promise<Response> {
     });
 
     await transporter.sendMail({
-      from: `"Reformas Petiso Web" <${gmailUser}>`,
+      from: `"Reformas Petizo Web" <${gmailUser}>`,
       to: toEmail,
       replyTo: email,
-      subject: `[Reformas Petiso] Nueva solicitud — ${tipo} | ${nombre}`,
+      subject: `[Reformas Petizo] Nueva solicitud — ${tipo} | ${nombre}`,
       html: buildEmailHtml({ nombre, email, tipo, mensaje, fechaHora }),
       text: `Nueva solicitud\n\nNombre: ${nombre}\nEmail: ${email}\nTipo: ${tipo}\nFecha: ${fechaHora}\n\nMensaje:\n${mensaje}`,
     });

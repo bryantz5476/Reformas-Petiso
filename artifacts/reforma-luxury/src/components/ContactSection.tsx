@@ -223,7 +223,7 @@ export default function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full relative overflow-hidden group bg-white text-black hover:bg-white/90 text-lg font-medium tracking-wide h-14 rounded-xl disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full relative overflow-hidden group bg-white text-black hover:bg-white/90 text-lg font-medium tracking-wide h-14 rounded-xl cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 data-testid="button-submit-contact"
                 disabled={isSubmitting}
               >

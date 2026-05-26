@@ -137,7 +137,7 @@ export default function HeroSection() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            Estudio V
+            Reformas Petizo
           </motion.a>
 
           <motion.div
