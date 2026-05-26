@@ -70,17 +70,9 @@ export default function ContactSection() {
       // Honeypot: descarte silencioso si el campo oculto tiene valor (bot)
       if (honeypot.length > 0) return;
 
-      const serviceId  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string | undefined;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
-      const publicKey  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string | undefined;
-
-      if (!serviceId || !templateId || !publicKey) {
-        throw new Error("EmailJS no está configurado. Faltan variables de entorno.");
-      }
-
       await emailjs.send(
-        serviceId,
-        templateId,
+        "service_irhu644",
+        "template_6jeacyk",
         {
           from_name:  data.nombre,
           from_email: data.email,
@@ -88,7 +80,7 @@ export default function ContactSection() {
           mensaje:    data.mensaje,
           reply_to:   data.email,
         },
-        { publicKey },
+        { publicKey: "gvPB9HN65kR_tbzmK" },
       );
     },
     onSuccess: () => {
