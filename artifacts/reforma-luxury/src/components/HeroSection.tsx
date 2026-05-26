@@ -129,9 +129,10 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.8, duration: 0.6 }}
-            className="text-sm font-serif font-bold tracking-[0.3em] uppercase text-white"
+            className="flex flex-col leading-none"
           >
-            Reformas Petiso
+            <span className="text-[9px] uppercase tracking-[0.25em] text-slate-400 font-sans font-medium mb-0.5">Reformas</span>
+            <span className="text-lg font-serif font-bold text-white tracking-wide">Petiso</span>
           </motion.div>
 
           <motion.div
