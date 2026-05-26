@@ -11,10 +11,8 @@ import { Button } from "@/components/ui/button";
 const formSchema = z.object({
   nombre: z.string().min(2, "Nombre muy corto"),
   email: z.string().email("Email inválido"),
-  telefono: z.string().min(9, "Teléfono inválido"),
-  tipo: z.string().min(1, "Selecciona un tipo"),
-  superficie: z.string().min(1, "Indica la superficie"),
-  mensaje: z.string().min(10, "Mensaje muy corto"),
+  tipo: z.string().min(1, "Selecciona un tipo de reforma"),
+  mensaje: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -26,9 +24,7 @@ export default function ContactSection() {
     defaultValues: {
       nombre: "",
       email: "",
-      telefono: "",
       tipo: "",
-      superficie: "",
       mensaje: "",
     },
   });
@@ -44,7 +40,7 @@ export default function ContactSection() {
 
   return (
     <section id="contacto" className="py-32 px-6 md:px-12 bg-[#0a0f18] w-full">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Solicita tu Presupuesto</h2>
           <p className="text-muted-foreground font-light text-lg">
@@ -63,7 +59,12 @@ export default function ContactSection() {
                     <FormItem>
                       <FormLabel className="text-white/80">Nombre</FormLabel>
                       <FormControl>
-                        <Input placeholder="Tu nombre completo" className="bg-background/50 border-border" {...field} />
+                        <Input
+                          placeholder="Tu nombre completo"
+                          className="bg-background/50 border-border"
+                          data-testid="input-nombre"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -76,33 +77,13 @@ export default function ContactSection() {
                     <FormItem>
                       <FormLabel className="text-white/80">Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="tu@email.com" type="email" className="bg-background/50 border-border" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="telefono"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white/80">Teléfono</FormLabel>
-                      <FormControl>
-                        <Input placeholder="+34 600 000 000" className="bg-background/50 border-border" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="superficie"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white/80">Superficie aproximada (m²)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Ej. 120" className="bg-background/50 border-border" {...field} />
+                        <Input
+                          placeholder="tu@email.com"
+                          type="email"
+                          className="bg-background/50 border-border"
+                          data-testid="input-email"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -118,7 +99,7 @@ export default function ContactSection() {
                     <FormLabel className="text-white/80">Tipo de Reforma</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="bg-background/50 border-border">
+                        <SelectTrigger className="bg-background/50 border-border" data-testid="select-tipo">
                           <SelectValue placeholder="Selecciona el tipo" />
                         </SelectTrigger>
                       </FormControl>
@@ -142,8 +123,9 @@ export default function ContactSection() {
                     <FormLabel className="text-white/80">Mensaje</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Detalla tu proyecto..."
-                        className="bg-background/50 border-border min-h-[120px] resize-none"
+                        placeholder="Cuéntanos tu proyecto..."
+                        className="bg-background/50 border-border min-h-[140px] resize-none"
+                        data-testid="textarea-mensaje"
                         {...field}
                       />
                     </FormControl>
