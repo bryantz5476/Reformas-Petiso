@@ -118,10 +118,10 @@ export default function HeroSection() {
     >
       {/* Navbar */}
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-50 border-b transition-[background,backdrop-filter,padding,border-color] duration-500 ${
           isScrolled
-            ? "bg-[#060b14]/80 backdrop-blur-xl border-b border-white/5 py-4"
-            : "bg-transparent py-7"
+            ? "bg-[#060b14]/90 backdrop-blur-xl border-white/[0.07] py-4"
+            : "bg-transparent backdrop-blur-none border-transparent py-7"
         }`}
       >
         <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
