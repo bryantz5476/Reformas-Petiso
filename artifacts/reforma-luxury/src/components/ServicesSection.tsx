@@ -6,153 +6,161 @@ const services = [
   {
     index: "01",
     title: "Cocinas de Diseño",
-    tag: "Gastronomía & Estética",
+    subtitle: "Gastronomía & Estética",
     description:
-      "Espacios culinarios donde la funcionalidad se encuentra con la alta estética. Encimeras de piedra natural, electrodomésticos integrados de alta gama y cabinetería a medida ejecutada con precisión milimétrica.",
+      "Espacios culinarios donde la funcionalidad se funde con la alta estética. Encimeras de piedra natural, cabinetería a medida y electrodomésticos de alta gama perfectamente integrados.",
     price: "Desde 25.000 €",
-    detail: "Porcelanosa · Silestone · Bulthaup · Gaggenau",
+    brands: ["Porcelanosa", "Silestone", "Bulthaup", "Gaggenau"],
+    image: "/images/gallery-1.png",
   },
   {
     index: "02",
     title: "Baños de Lujo",
-    tag: "Bienestar & Ritual",
+    subtitle: "Bienestar & Ritual",
     description:
       "Santuarios de bienestar privados. Piedra natural, iluminación arquitectónica indirecta y grifería de autor que convierte cada mañana en un ritual de precisión y serenidad.",
     price: "Desde 15.000 €",
-    detail: "Hansgrohe · Laufen · Dornbracht · Duravit",
+    brands: ["Hansgrohe", "Laufen", "Dornbracht", "Duravit"],
+    image: "/images/gallery-2.png",
   },
   {
     index: "03",
     title: "Reformas Integrales",
-    tag: "Transformación Total",
+    subtitle: "Transformación Total",
     description:
-      "Rediseño completo de la vivienda: redistribución de espacios, optimización de luz natural, instalaciones de última generación y acabados inmaculados. Del plano a la llave.",
+      "Rediseño completo del hogar. Redistribución de espacios, optimización de luz natural, instalaciones de nueva generación y acabados inmaculados. Del plano a la llave en manos.",
     price: "Proyectos a medida",
-    detail: "Consultoría · Arquitectura · Interiorismo · Gestión",
+    brands: ["Arquitectura", "Interiorismo", "Gestión", "Llave en mano"],
+    image: "/images/gallery-3.png",
   },
 ];
 
-function ServiceRow({ service, isOpen, onToggle }: {
-  service: typeof services[0];
-  isOpen: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <motion.div
-      className="border-b border-white/[0.08] cursor-pointer group"
-      onClick={onToggle}
-      data-testid={`service-row-${service.index}`}
-    >
-      {/* Main row */}
-      <div className="flex items-center gap-6 py-7 md:py-8">
-        {/* Index */}
-        <span className="text-xs tracking-[0.25em] text-slate-600 font-mono w-8 shrink-0">
-          {service.index}
-        </span>
-
-        {/* Title */}
-        <motion.h3
-          className="flex-1 text-2xl md:text-3xl lg:text-4xl font-serif font-medium tracking-tight transition-colors duration-300"
-          animate={{ color: isOpen ? "#ffffff" : "rgba(255,255,255,0.7)" }}
-        >
-          {service.title}
-        </motion.h3>
-
-        {/* Tag — visible on desktop when closed */}
-        <span
-          className={`hidden lg:block text-xs tracking-[0.2em] uppercase text-slate-500 transition-opacity duration-300 ${isOpen ? "opacity-0" : "opacity-100"}`}
-        >
-          {service.tag}
-        </span>
-
-        {/* Arrow */}
-        <motion.div
-          animate={{ rotate: isOpen ? 45 : 0 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center shrink-0 group-hover:border-white/30 transition-colors duration-300"
-        >
-          <ArrowUpRight size={15} className="text-slate-400 group-hover:text-white transition-colors duration-300" />
-        </motion.div>
-      </div>
-
-      {/* Expanded content */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="pb-10 pl-14 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
-              {/* Description */}
-              <p className="md:col-span-2 text-slate-400 font-light text-base leading-relaxed">
-                {service.description}
-              </p>
-
-              {/* Price + materials */}
-              <div className="flex flex-col gap-4">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-slate-600 mb-1">Inversión</p>
-                  <p className="text-white font-medium text-lg">{service.price}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-slate-600 mb-2">Marcas</p>
-                  <p className="text-slate-500 text-sm leading-relaxed">{service.detail}</p>
-                </div>
-                <a
-                  href="#contacto"
-                  onClick={(e) => e.stopPropagation()}
-                  className="mt-2 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-200 group/cta"
-                >
-                  Solicitar info
-                  <ArrowUpRight size={12} className="group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5 transition-transform duration-200" />
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
-
 export default function ServicesSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [active, setActive] = useState(0);
+  const current = services[active];
 
   return (
-    <section id="servicios" className="py-32 px-6 md:px-16 bg-background w-full">
+    <section id="servicios" className="bg-background w-full py-32 px-6 md:px-16">
       <div className="max-w-6xl mx-auto">
 
-        {/* Header row */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20">
-          <div>
-            <div className="flex items-center gap-4 mb-5">
-              <div className="h-px w-8 bg-slate-600" />
-              <span className="text-xs uppercase tracking-[0.3em] text-slate-500">Servicios</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight">
-              Nuestra<br />Experiencia
-            </h2>
-          </div>
-          <p className="text-slate-500 font-light text-base max-w-xs leading-relaxed md:text-right">
-            Un enfoque arquitectónico donde el diseño sirve al propósito y cada detalle tiene intención.
-          </p>
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-4">
+          <div className="h-px w-8 bg-slate-600" />
+          <span className="text-xs uppercase tracking-[0.3em] text-slate-500">Servicios</span>
         </div>
+        <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-20 leading-tight">
+          Nuestra Experiencia
+        </h2>
 
-        {/* Top border */}
-        <div className="border-t border-white/[0.08]" />
+        {/* Main layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 border border-white/[0.07] rounded-3xl overflow-hidden">
 
-        {/* Service rows */}
-        {services.map((service, i) => (
-          <ServiceRow
-            key={i}
-            service={service}
-            isOpen={openIndex === i}
-            onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-          />
-        ))}
+          {/* LEFT — service tabs */}
+          <div className="lg:col-span-2 flex flex-col border-r border-white/[0.07]">
+            {services.map((s, i) => {
+              const isActive = active === i;
+              return (
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  data-testid={`service-tab-${i}`}
+                  className={`relative text-left px-8 py-8 border-b border-white/[0.07] last:border-b-0 transition-colors duration-300 group ${
+                    isActive ? "bg-white/[0.04]" : "hover:bg-white/[0.02]"
+                  }`}
+                >
+                  {/* Active indicator bar */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeBar"
+                      className="absolute left-0 top-0 bottom-0 w-[2px] bg-white"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className={`text-[10px] tracking-[0.25em] uppercase font-mono mb-3 transition-colors duration-200 ${isActive ? "text-slate-400" : "text-slate-600"}`}>
+                        {s.index}
+                      </p>
+                      <h3 className={`text-xl md:text-2xl font-serif font-medium leading-tight transition-colors duration-200 ${isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300"}`}>
+                        {s.title}
+                      </h3>
+                      <p className={`text-xs mt-2 tracking-wide transition-colors duration-200 ${isActive ? "text-slate-400" : "text-slate-600"}`}>
+                        {s.subtitle}
+                      </p>
+                    </div>
+                    <ArrowUpRight
+                      size={16}
+                      className={`shrink-0 mt-1 transition-all duration-200 ${isActive ? "text-white opacity-100" : "text-slate-600 opacity-0 group-hover:opacity-100"}`}
+                    />
+                  </div>
+                </button>
+              );
+            })}
+
+            {/* Bottom CTA */}
+            <div className="mt-auto px-8 py-8 border-t border-white/[0.07]">
+              <a
+                href="#contacto"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-400 hover:text-white transition-colors duration-200 group"
+                data-testid="link-services-cta"
+              >
+                Solicitar presupuesto
+                <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+              </a>
+            </div>
+          </div>
+
+          {/* RIGHT — content panel */}
+          <div className="lg:col-span-3 relative overflow-hidden min-h-[480px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 flex flex-col"
+              >
+                {/* Image top half */}
+                <div className="relative flex-1 overflow-hidden">
+                  <motion.img
+                    src={current.image}
+                    alt={current.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    initial={{ scale: 1.06 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080d16] via-[#080d16]/20 to-transparent" />
+
+                  {/* Price badge */}
+                  <div className="absolute top-6 right-6 bg-black/50 backdrop-blur-md border border-white/10 rounded-full px-4 py-2 text-xs tracking-widest uppercase text-white">
+                    {current.price}
+                  </div>
+                </div>
+
+                {/* Text bottom */}
+                <div className="p-8 md:p-10 bg-[#080d16]">
+                  <p className="text-slate-400 font-light text-sm md:text-base leading-relaxed mb-7">
+                    {current.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {current.brands.map((brand, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] uppercase tracking-[0.2em] text-slate-500 border border-white/[0.08] rounded-full px-3 py-1"
+                      >
+                        {brand}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+        </div>
       </div>
     </section>
   );
