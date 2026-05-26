@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Reforma Luxury"
+version = "1.0.0"
+id = "artifacts/reforma-luxury"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18919
+
+[services.development]
+run = "pnpm --filter @workspace/reforma-luxury run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/reforma-luxury", "run", "build" ]
+publicDir = "artifacts/reforma-luxury/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18919"
+BASE_PATH = "/"
