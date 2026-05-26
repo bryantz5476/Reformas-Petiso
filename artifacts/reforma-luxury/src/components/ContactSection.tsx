@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -43,26 +42,8 @@ export default function ContactSection() {
     form.reset();
   };
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-300, 300], [10, -10]);
-  const rotateY = useTransform(x, [-300, 300], [-10, 10]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    x.set(e.clientX - centerX);
-    y.set(e.clientY - centerY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
-    <section id="contacto" className="py-32 px-6 md:px-12 bg-[#0a0f18] w-full perspective-[1000px]">
+    <section id="contacto" className="py-32 px-6 md:px-12 bg-[#0a0f18] w-full">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Solicita tu Presupuesto</h2>
@@ -71,14 +52,9 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <motion.div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-          className="bg-card border border-border/50 rounded-3xl p-8 md:p-12 shadow-2xl relative"
-        >
+        <div className="bg-card border border-border/50 rounded-3xl p-8 md:p-12 shadow-2xl">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" style={{ transform: "translateZ(30px)" }}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <FormField
                   control={form.control}
@@ -165,10 +141,10 @@ export default function ContactSection() {
                   <FormItem>
                     <FormLabel className="text-white/80">Mensaje</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="Detalla tu proyecto..." 
-                        className="bg-background/50 border-border min-h-[120px] resize-none" 
-                        {...field} 
+                      <Textarea
+                        placeholder="Detalla tu proyecto..."
+                        className="bg-background/50 border-border min-h-[120px] resize-none"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -176,8 +152,8 @@ export default function ContactSection() {
                 )}
               />
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 size="lg"
                 className="w-full relative overflow-hidden group bg-white text-black hover:bg-white/90 text-lg font-medium tracking-wide h-14 rounded-xl"
                 data-testid="button-submit-contact"
@@ -187,7 +163,7 @@ export default function ContactSection() {
               </Button>
             </form>
           </Form>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

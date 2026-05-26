@@ -214,7 +214,7 @@ export default function HeroSection() {
               Espacios
             </motion.h1>
           </div>
-          <div className="overflow-hidden mb-10">
+          <div className="mb-10">
             <motion.h1
               custom={0.75}
               variants={wipeVariants}
