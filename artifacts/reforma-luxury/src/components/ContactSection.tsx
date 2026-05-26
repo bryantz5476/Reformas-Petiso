@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useMutation } from "@tanstack/react-query";
-import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
 import {
   Form,
@@ -64,18 +63,19 @@ export default function ContactSection() {
 
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => {
-      await emailjs.send(
-        "service_irhu644",
-        "template_6jeacyk",
-        {
-          from_name:  data.nombre,
-          from_email: data.email,
-          tipo:       data.tipo,
-          mensaje:    data.mensaje,
-          reply_to:   data.email,
-        },
-        { publicKey: "gvPB9HN65kR_tbzmK" },
-      );
+      const body = new URLSearchParams({
+        "form-name": "contact",
+        nombre:  data.nombre,
+        email:   data.email,
+        tipo:    data.tipo,
+        mensaje: data.mensaje,
+      });
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
+      if (!res.ok) throw new Error(`Error ${res.status}`);
     },
     onSuccess: () => {
       toast({
