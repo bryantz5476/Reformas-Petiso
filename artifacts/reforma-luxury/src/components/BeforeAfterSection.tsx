@@ -30,6 +30,8 @@ export default function BeforeAfterSection() {
             <img 
               src="/images/before.png" 
               alt="Antes de la reforma" 
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover filter grayscale opacity-70"
             />
           </div>
@@ -48,6 +50,8 @@ export default function BeforeAfterSection() {
               <img 
                 src="/images/after.png" 
                 alt="Después de la reforma" 
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </motion.div>
