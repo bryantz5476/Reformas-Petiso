@@ -5,15 +5,18 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type { ContactRequest, ContactResponse, HealthStatus } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
 import type { ErrorType } from "../custom-fetch";
@@ -98,4 +101,63 @@ export function useHealthCheck<
   };
 
   return { ...query, queryKey: queryOptions.queryKey };
+}
+
+// ---------------------------------------------------------------------------
+// Contact form submission
+// ---------------------------------------------------------------------------
+
+export const getSubmitContactUrl = () => `/api/contact`;
+
+export const submitContact = async (
+  body: ContactRequest,
+  options?: RequestInit,
+): Promise<ContactResponse> => {
+  return customFetch<ContactResponse>(getSubmitContactUrl(), {
+    ...options,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options?.headers ?? {}),
+    },
+    body: JSON.stringify(body),
+  });
+};
+
+export type SubmitContactMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitContact>>
+>;
+export type SubmitContactMutationBody = ContactRequest;
+export type SubmitContactMutationError = ErrorType<ContactResponse>;
+
+export function useSubmitContact<
+  TError = ErrorType<ContactResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitContact>>,
+    TError,
+    ContactRequest,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitContact>>,
+  TError,
+  ContactRequest,
+  TContext
+> {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitContact>>,
+    ContactRequest
+  > = (body) => submitContact(body, requestOptions);
+
+  return useMutation<
+    Awaited<ReturnType<typeof submitContact>>,
+    TError,
+    ContactRequest,
+    TContext
+  >({ mutationFn, ...mutationOptions });
 }

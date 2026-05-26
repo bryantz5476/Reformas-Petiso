@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: contact
+    description: Contact form operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit contact form
+      description: >
+        Receives a renovation inquiry. Honeypot field (_honeypot) must be
+        empty; non-empty values are silently discarded server-side (bot trap).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactRequest"
+      responses:
+        "200":
+          description: Submission accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactResponse"
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +71,38 @@ components:
       required:
         - status
 
+    ContactRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+          minLength: 2
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        tipo:
+          type: string
+          enum: [Cocina, Baño, Integral, Otro]
+        mensaje:
+          type: string
+          minLength: 10
+          maxLength: 2000
+        _honeypot:
+          type: string
+          maxLength: 0
+          description: Must be empty. Bot trap field.
+      required:
+        - nombre
+        - email
+        - tipo
+        - mensaje
+
+    ContactResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message

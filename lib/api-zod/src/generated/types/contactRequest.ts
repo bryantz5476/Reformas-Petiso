@@ -5,9 +5,6 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
 
 export type TipoReforma = "Cocina" | "Baño" | "Integral" | "Otro";
 
@@ -17,8 +14,4 @@ export interface ContactRequest {
   tipo: TipoReforma;
   mensaje: string;
   _honeypot?: string;
-}
-
-export interface ContactResponse {
-  message: string;
 }

@@ -14,3 +14,22 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+export const TIPO_REFORMA_VALUES = ["Cocina", "Baño", "Integral", "Otro"] as const;
+export type TipoReforma = (typeof TIPO_REFORMA_VALUES)[number];
+
+export const ContactRequest = zod.object({
+  nombre: zod
+    .string()
+    .min(2)
+    .max(100)
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑàèìòùÀÈÌÒÙ'\- ]+$/),
+  email: zod.string().email().max(254),
+  tipo: zod.enum(TIPO_REFORMA_VALUES),
+  mensaje: zod.string().min(10).max(2000),
+  _honeypot: zod.string().max(0).optional(),
+});
+export type ContactRequestType = zod.infer<typeof ContactRequest>;
+
+export const ContactResponse = zod.object({ message: zod.string() });
+export type ContactResponseType = zod.infer<typeof ContactResponse>;
