@@ -171,7 +171,7 @@ export default function HeroSection() {
       <div className="flex flex-col md:flex-row min-h-[100dvh]">
 
         {/* LEFT PANEL */}
-        <div className="relative z-10 flex flex-col justify-end pb-20 px-8 md:px-16 pt-32 md:pt-0 w-full md:w-[55%] bg-[#060b14]">
+        <div className="relative z-10 flex flex-col justify-end pb-20 px-12 md:px-24 pt-32 md:pt-0 w-full md:w-[55%] bg-[#060b14]">
 
           {/* Decorative oversized background label */}
           <div
