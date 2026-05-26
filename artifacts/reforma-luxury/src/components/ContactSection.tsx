@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -45,13 +46,14 @@ const formSchema = z.object({
     .string()
     .min(10, "El mensaje debe tener al menos 10 caracteres")
     .max(2000, "El mensaje no puede superar los 2000 caracteres"),
-  _honeypot: z.string().max(0).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function ContactSection() {
   const { toast } = useToast();
+  // Honeypot controlado fuera de React Hook Form para que no interfiera con la validación
+  const [honeypot, setHoneypot] = useState("");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -60,14 +62,13 @@ export default function ContactSection() {
       email: "",
       tipo: undefined,
       mensaje: "",
-      _honeypot: "",
     },
   });
 
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => {
       // Honeypot: descarte silencioso si el campo oculto tiene valor (bot)
-      if (data._honeypot && data._honeypot.length > 0) return;
+      if (honeypot.length > 0) return;
 
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID as string,
@@ -119,26 +120,25 @@ export default function ContactSection() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
-              {/* Honeypot anti-bot: invisible para humanos, los bots lo rellenan */}
+              {/* Honeypot anti-bot: off-screen, los bots lo rellenan, los humanos no lo ven */}
               <div
-                aria-hidden="true"
                 style={{
                   position: "absolute",
+                  left: "-9999px",
                   width: "1px",
                   height: "1px",
                   overflow: "hidden",
-                  clip: "rect(0 0 0 0)",
-                  whiteSpace: "nowrap",
                   opacity: 0,
                   pointerEvents: "none",
                 }}
               >
                 <input
                   type="text"
-                  {...form.register("_honeypot")}
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
                   tabIndex={-1}
                   autoComplete="off"
-                  name="_honeypot"
                 />
               </div>
 
