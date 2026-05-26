@@ -113,6 +113,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="inicio"
       ref={containerRef}
       className="relative min-h-[100dvh] w-full overflow-hidden bg-[#060b14] text-foreground flex flex-col"
     >
@@ -125,14 +126,19 @@ export default function HeroSection() {
         }`}
       >
         <div className="w-full px-6 md:px-24 flex items-center justify-between">
-          <motion.div
+          <motion.a
+            href="#inicio"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.8, duration: 0.6 }}
-            className="text-sm font-serif font-bold tracking-[0.3em] uppercase text-white"
+            className="text-sm font-serif font-bold tracking-[0.3em] uppercase text-white hover:text-slate-300 transition-colors duration-200"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
             Estudio V
-          </motion.div>
+          </motion.a>
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -277,6 +283,9 @@ export default function HeroSection() {
             <motion.img
               src="/images/gallery-1.png"
               alt="Proyecto de reforma de lujo"
+              fetchPriority="high"
+              loading="eager"
+              decoding="sync"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ y: imageY, scale: imageScale }}
             />

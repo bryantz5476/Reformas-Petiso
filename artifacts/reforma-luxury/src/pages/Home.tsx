@@ -13,15 +13,14 @@ export default function Home() {
   return (
     <main className="bg-background min-h-screen text-foreground selection:bg-primary/30 selection:text-white">
       <HeroSection />
-      <Suspense fallback={null}>
-        <InfiniteBanner />
-        <ServicesSection />
-        <GallerySection />
-        <BeforeAfterSection />
-        <TestimonialsSection />
-        <ContactSection />
-        <Footer />
-      </Suspense>
+      {/* Suspense individual por sección: cada una aparece en cuanto carga su chunk */}
+      <Suspense fallback={null}><InfiniteBanner /></Suspense>
+      <Suspense fallback={null}><ServicesSection /></Suspense>
+      <Suspense fallback={null}><GallerySection /></Suspense>
+      <Suspense fallback={null}><BeforeAfterSection /></Suspense>
+      <Suspense fallback={null}><TestimonialsSection /></Suspense>
+      <Suspense fallback={null}><ContactSection /></Suspense>
+      <Suspense fallback={null}><Footer /></Suspense>
     </main>
   );
 }

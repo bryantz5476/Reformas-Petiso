@@ -43,9 +43,14 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          "vendor-react": ["react", "react-dom"],
-          "vendor-motion": ["framer-motion"],
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (id.includes("@radix-ui")) return "vendor-radix";
+          if (id.includes("lucide-react")) return "vendor-icons";
+          if (id.includes("@tanstack")) return "vendor-query";
+          if (id.includes("framer-motion") || id.includes("@motionone") || id.includes("motion")) return "vendor-motion";
+          if (id.includes("react-dom") || id.includes("react-hook-form") || id.includes("scheduler")) return "vendor-react";
+          if (id.includes("zod")) return "vendor-zod";
         },
       },
     },
