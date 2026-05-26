@@ -1,84 +1,150 @@
-import useEmblaCarousel from "embla-carousel-react";
-import { Star } from "lucide-react";
-import { useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 const testimonials = [
   {
-    name: "Elena M.",
     quote: "La atención al detalle es asombrosa. Transformaron nuestro apartamento en una verdadera obra de arte arquitectónica.",
+    name: "Elena M.",
+    project: "Reforma Integral · Madrid",
+    index: "01",
   },
   {
-    name: "Javier R.",
     quote: "Profesionalismo de principio a fin. Materiales de una calidad exquisita y un diseño que supera nuestras expectativas diarias.",
+    name: "Javier R.",
+    project: "Cocina de Diseño · Barcelona",
+    index: "02",
   },
   {
+    quote: "Entendieron perfectamente nuestra visión y la ejecutaron con precisión milimétrica. El resultado es sencillamente perfecto.",
     name: "Sofía V.",
-    quote: "El diseño de la cocina es un sueño. Entendieron perfectamente nuestra visión y la ejecutaron con precisión milimétrica.",
+    project: "Baño de Lujo · Marbella",
+    index: "03",
   },
   {
+    quote: "Un equipo que no hace concesiones con la calidad. La inversión ha valido cada céntimo. Resultado impecable.",
     name: "Carlos T.",
-    quote: "Un equipo que no hace concesiones con la calidad. La inversión ha valido cada céntimo. Impecable.",
-  }
+    project: "Reforma Integral · Ibiza",
+    index: "04",
+  },
 ];
 
+const DURATION = 5000;
+
 export default function TestimonialsSection() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });
+  const [current, setCurrent] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startRef = useRef<number>(Date.now());
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
+  const goTo = (i: number) => {
+    setCurrent(i);
+    setProgress(0);
+    startRef.current = Date.now();
+  };
 
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
+  useEffect(() => {
+    const tick = () => {
+      const elapsed = Date.now() - startRef.current;
+      const pct = Math.min((elapsed / DURATION) * 100, 100);
+      setProgress(pct);
+      if (elapsed >= DURATION) {
+        setCurrent((c) => (c + 1) % testimonials.length);
+        setProgress(0);
+        startRef.current = Date.now();
+      }
+    };
+    intervalRef.current = setInterval(tick, 30);
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, []);
+
+  const t = testimonials[current];
 
   return (
-    <section className="py-32 px-6 md:px-12 bg-card w-full">
-      <div className="max-w-7xl mx-auto text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Clientes Satisfechos</h2>
-        <p className="text-muted-foreground font-light text-lg">
-          La confianza de quienes exigen lo mejor.
-        </p>
+    <section className="relative py-40 px-6 md:px-12 bg-background w-full overflow-hidden">
+
+      {/* Giant decorative index number */}
+      <div
+        className="absolute right-10 top-1/2 -translate-y-1/2 font-serif font-bold text-white/[0.03] pointer-events-none select-none leading-none"
+        style={{ fontSize: "clamp(12rem, 30vw, 26rem)" }}
+        aria-hidden
+      >
+        {t.index}
       </div>
 
-      <div className="max-w-5xl mx-auto relative">
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex touch-pan-y">
-            {testimonials.map((testimonial, i) => (
-              <div key={i} className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.33%] px-4">
-                <div className="bg-background/50 backdrop-blur-sm border border-border rounded-2xl p-8 h-full flex flex-col select-none">
-                  <div className="flex gap-1 mb-6 text-primary">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} size={18} fill="currentColor" />
-                    ))}
-                  </div>
-                  <p className="text-lg font-serif italic text-white/90 flex-grow mb-6">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="text-sm tracking-wider uppercase text-muted-foreground font-medium border-t border-border/50 pt-4">
-                    {testimonial.name}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="max-w-5xl mx-auto relative z-10">
+
+        {/* Section label */}
+        <div className="flex items-center gap-4 mb-20">
+          <div className="h-px w-10 bg-slate-600" />
+          <span className="text-xs uppercase tracking-[0.3em] text-slate-500">Testimonios</span>
         </div>
-        
-        <div className="flex justify-center gap-4 mt-8">
-          <button 
-            onClick={scrollPrev}
-            className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors"
-            data-testid="button-prev-testimonial"
+
+        {/* Quote */}
+        <div className="min-h-[220px] flex items-start mb-16">
+          <AnimatePresence mode="wait">
+            <motion.blockquote
+              key={current}
+              initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium text-white leading-[1.2] tracking-tight"
+            >
+              &ldquo;{t.quote}&rdquo;
+            </motion.blockquote>
+          </AnimatePresence>
+        </div>
+
+        {/* Author */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`author-${current}`}
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 12 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="flex items-center gap-5 mb-16"
           >
-            ←
-          </button>
-          <button 
-            onClick={scrollNext}
-            className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors"
-            data-testid="button-next-testimonial"
-          >
-            →
-          </button>
+            <div
+              className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center text-white text-sm font-medium shrink-0"
+            >
+              {t.name.charAt(0)}
+            </div>
+            <div>
+              <p className="text-white font-medium text-sm tracking-wide">{t.name}</p>
+              <p className="text-slate-500 text-xs tracking-widest uppercase mt-0.5">{t.project}</p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Progress tabs */}
+        <div className="flex items-center gap-3">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              data-testid={`button-testimonial-${i}`}
+              className="group relative h-px flex-1 bg-white/10 overflow-hidden cursor-pointer"
+              aria-label={`Ver testimonio ${i + 1}`}
+            >
+              {i === current && (
+                <motion.div
+                  className="absolute inset-y-0 left-0 bg-white"
+                  style={{ width: `${progress}%` }}
+                />
+              )}
+              {i < current && (
+                <div className="absolute inset-0 bg-white/40" />
+              )}
+              <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-200" />
+            </button>
+          ))}
+        </div>
+
+        {/* Counter */}
+        <div className="flex justify-between mt-4 text-[11px] tracking-widest text-slate-600 uppercase">
+          <span>{String(current + 1).padStart(2, "0")}</span>
+          <span>{String(testimonials.length).padStart(2, "0")}</span>
         </div>
       </div>
     </section>
