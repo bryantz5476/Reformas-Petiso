@@ -129,9 +129,9 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.8, duration: 0.6 }}
-            className="text-xs font-sans font-medium tracking-[0.18em] uppercase text-white/90"
+            className="text-sm font-serif font-bold tracking-[0.3em] uppercase text-white"
           >
-            Reformas Petiso
+            Estudio V
           </motion.div>
 
           <motion.div
