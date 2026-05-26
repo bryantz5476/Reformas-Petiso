@@ -124,7 +124,7 @@ export default function HeroSection() {
             : "bg-transparent backdrop-blur-none border-transparent py-7"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
+        <div className="w-full px-6 md:px-24 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
