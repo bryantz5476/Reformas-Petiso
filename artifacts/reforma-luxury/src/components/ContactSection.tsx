@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useMutation } from "@tanstack/react-query";
+import { useForm as useFormspree } from "@formspree/react";
 import { useToast } from "@/hooks/use-toast";
 import {
   Form,
@@ -50,6 +51,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function ContactSection() {
   const { toast } = useToast();
+  const [, formspreeSubmit] = useFormspree("xaqklqvk");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -63,19 +65,15 @@ export default function ContactSection() {
 
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => {
-      const res = await fetch("https://formspree.io/f/xaqklqvk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          nombre:  data.nombre,
-          email:   data.email,
-          tipo:    data.tipo,
-          mensaje: data.mensaje,
-        }),
+      const result = await formspreeSubmit({
+        nombre:  data.nombre,
+        email:   data.email,
+        tipo:    data.tipo,
+        mensaje: data.mensaje,
       });
-      if (!res.ok) throw new Error(`Error ${res.status}`);
-      const json = await res.json() as { ok: boolean };
-      if (!json.ok) throw new Error("Formspree error");
+      if (result.response.status !== 200) {
+        throw new Error(`Error ${result.response.status}`);
+      }
     },
     onSuccess: () => {
       toast({
