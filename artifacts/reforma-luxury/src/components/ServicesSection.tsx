@@ -30,6 +30,15 @@ const services = [
     brands: ["Arquitectura", "Interiorismo", "Gestión", "Llave en mano"],
     image: "/images/gallery-3.png",
   },
+  {
+    index: "04",
+    title: "Fontanería",
+    subtitle: "Instalaciones & Precisión",
+    description:
+      "Instalación, reparación y renovación completa de redes de agua. Grifería de alta gama, sistemas de calefacción, tuberías y saneamiento ejecutados con la máxima precisión y garantía.",
+    brands: ["Grifería", "Tuberías", "Calefacción", "Saneamiento"],
+    image: "/images/fontaneria.jpg",
+  },
 ];
 
 export default function ServicesSection() {
