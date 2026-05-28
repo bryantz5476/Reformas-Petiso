@@ -99,14 +99,14 @@ export default function HeroSection() {
 
   const lineVariants = {
     hidden: { scaleX: 0, originX: 0 },
-    visible: { scaleX: 1, transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.2 } },
+    visible: { scaleX: 1, transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1], delay: 0.1 } },
   };
 
   const wipeVariants = {
     hidden: { clipPath: "inset(0 100% 0 0)" },
     visible: (delay: number) => ({
       clipPath: "inset(0 0% 0 0)",
-      transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay },
+      transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1], delay },
     }),
   };
 
@@ -114,7 +114,7 @@ export default function HeroSection() {
     hidden: { clipPath: "inset(100% 0 0 0)" },
     visible: {
       clipPath: "inset(0% 0 0 0)",
-      transition: { duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.1 },
+      transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.05 },
     },
   };
 
@@ -137,7 +137,7 @@ export default function HeroSection() {
             href="#inicio"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.8, duration: 0.6 }}
+            transition={{ delay: 0.8, duration: 0.4 }}
             className="text-sm font-serif font-bold tracking-[0.3em] uppercase text-white hover:text-slate-300 transition-colors duration-200"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             onTap={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -219,7 +219,7 @@ export default function HeroSection() {
             animate="visible"
             className="text-xs uppercase tracking-[0.2em] md:tracking-[0.35em] text-slate-400 mb-6 whitespace-nowrap"
           >
-            Arquitectura de Interiores
+            Construcción y Reformas
           </motion.p>
 
           {/* Main headline */}
@@ -247,7 +247,7 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Singulares.
+              Modernos.
             </motion.h1>
           </div>
 

@@ -1,6 +1,6 @@
 const brands = [
-  "Porcelanosa", "Silestone", "Dekton", "Hansgrohe", "Laufen",
-  "Dornbracht", "Bulthaup", "Gaggenau", "Miele", "V-Zug",
+  "Reformas", "Construcción", "Diseño de Interiores", "Acabados de Lujo", "Reforma Integral",
+  "Cocinas", "Baños", "Gestión de Obras", "Llave en Mano", "Calidad Premium",
 ];
 
 const Separator = () => (

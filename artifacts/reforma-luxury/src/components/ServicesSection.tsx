@@ -9,7 +9,7 @@ const services = [
     subtitle: "Gastronomía & Estética",
     description:
       "Espacios culinarios donde la funcionalidad se funde con la alta estética. Encimeras de piedra natural, cabinetería a medida y electrodomésticos de alta gama perfectamente integrados.",
-    brands: ["Porcelanosa", "Silestone", "Bulthaup", "Gaggenau"],
+    brands: ["Encimeras", "Azulejos", "Muebles a Medida", "Electrodomésticos"],
     image: "/images/gallery-1.png",
   },
   {
@@ -18,7 +18,7 @@ const services = [
     subtitle: "Bienestar & Ritual",
     description:
       "Santuarios de bienestar privados. Piedra natural, iluminación arquitectónica indirecta y grifería de autor que convierte cada mañana en un ritual de precisión y serenidad.",
-    brands: ["Hansgrohe", "Laufen", "Dornbracht", "Duravit"],
+    brands: ["Sanitarios", "Grifería", "Revestimientos", "Iluminación"],
     image: "/images/gallery-2.png",
   },
   {
