@@ -61,7 +61,14 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} Reformas Petizo. Todos los derechos reservados.</p>
           <p>
             Desarrollado por{" "}
-            <span className="text-muted-foreground/80 font-semibold tracking-wide">Clip Code</span>
+            <a
+              href="https://myclipcode.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground/80 font-semibold tracking-wide hover:text-white transition-colors duration-200"
+            >
+              Clip Code
+            </a>
           </p>
         </div>
 
