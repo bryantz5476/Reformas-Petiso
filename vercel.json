@@ -1,6 +1,0 @@
-{
-  "installCommand": "pnpm install --no-frozen-lockfile",
-  "buildCommand": "pnpm --filter @workspace/reforma-luxury build",
-  "outputDirectory": "artifacts/reforma-luxury/dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}
