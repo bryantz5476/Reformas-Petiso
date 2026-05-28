@@ -301,7 +301,7 @@ export default function HeroSection() {
             transition={{ delay: 1.6, duration: 0.6 }}
             className="absolute bottom-10 left-6 md:left-8 z-10 bg-black/40 backdrop-blur-md border border-white/10 rounded-full px-5 py-2.5 text-xs tracking-[0.2em] uppercase text-slate-300"
           >
-            Vitoria · Bilbao · Álava
+            Vitoria-Gasteiz
           </motion.div>
         </div>
       </div>
