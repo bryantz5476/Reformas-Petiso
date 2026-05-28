@@ -45,18 +45,16 @@ const GlareButton = ({ href, children }: { href: string; children: React.ReactNo
     x.set(e.clientX - rect.left);
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (href.startsWith("#")) {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-    }
+  const scrollTo = () => {
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <motion.a
       href={href}
-      onClick={handleClick}
+      onClick={(e) => { e.preventDefault(); scrollTo(); }}
+      onTap={scrollTo}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={handleMouseMove}
@@ -141,10 +139,8 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.8, duration: 0.6 }}
             className="text-sm font-serif font-bold tracking-[0.3em] uppercase text-white hover:text-slate-300 transition-colors duration-200"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            onTap={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             Reformas Petizo
           </motion.a>
@@ -155,9 +151,12 @@ export default function HeroSection() {
             transition={{ delay: 2, duration: 0.6 }}
             className="hidden md:flex items-center space-x-10 text-xs font-medium tracking-[0.2em] uppercase text-slate-300"
           >
-            <a href="#servicios" className="hover:text-white transition-colors duration-200">Servicios</a>
-            <a href="#proyectos" className="hover:text-white transition-colors duration-200">Proyectos</a>
-            <a href="#contacto" className="hover:text-white transition-colors duration-200">Contacto</a>
+            {(["#servicios","#proyectos","#contacto"] as const).map((id) => (
+              <a key={id} href={id} className="hover:text-white transition-colors duration-200"
+                onClick={(e) => { e.preventDefault(); document.querySelector(id)?.scrollIntoView({ behavior: "smooth" }); }}>
+                {id === "#servicios" ? "Servicios" : id === "#proyectos" ? "Proyectos" : "Contacto"}
+              </a>
+            ))}
           </motion.div>
 
           <button
@@ -176,9 +175,15 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           className="fixed inset-0 z-40 bg-[#060b14]/98 backdrop-blur-sm flex flex-col items-center justify-center space-y-10 text-2xl font-serif text-white"
         >
-          <a href="#servicios" onClick={() => setIsMenuOpen(false)}>Servicios</a>
-          <a href="#proyectos" onClick={() => setIsMenuOpen(false)}>Proyectos</a>
-          <a href="#contacto" onClick={() => setIsMenuOpen(false)}>Contacto</a>
+          {(["#servicios","#proyectos","#contacto"] as const).map((id) => (
+            <a key={id} href={id} onClick={(e) => {
+              e.preventDefault();
+              setIsMenuOpen(false);
+              document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+            }}>
+              {id === "#servicios" ? "Servicios" : id === "#proyectos" ? "Proyectos" : "Contacto"}
+            </a>
+          ))}
         </motion.div>
       )}
 
