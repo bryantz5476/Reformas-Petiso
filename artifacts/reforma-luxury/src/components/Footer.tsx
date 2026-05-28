@@ -62,7 +62,7 @@ export default function Footer() {
           <p>
             Desarrollado por{" "}
             <a
-              href="https://myclipcode.netlify.app"
+              href="https://clipcodedirectory.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground/80 font-semibold tracking-wide hover:text-white transition-colors duration-200"
