@@ -15,7 +15,7 @@ export default function Footer() {
               Reformas Petizo
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Arquitectura de interiores de lujo en Vitoria‑Gasteiz y Bilbao.
+              Arquitectura de interiores de lujo en Vitoria‑Gasteiz.
             </p>
             <a
               href="mailto:bryanzevallospersonal@gmail.com"
