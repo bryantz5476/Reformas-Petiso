@@ -26,22 +26,30 @@ export default function InfiniteBanner() {
       <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      <div className="marquee-track flex items-center">
-        <Track />
-        <Track />
-        <Track />
+      <div className="marquee-outer">
+        <div className="marquee-inner">
+          <Track />
+          <Track />
+        </div>
       </div>
 
       <style>{`
-        @keyframes marquee-scroll {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-33.3333%); }
+        .marquee-outer {
+          overflow: hidden;
+          width: 100%;
         }
-        .marquee-track {
-          animation: marquee-scroll 5s linear infinite;
+        .marquee-inner {
+          display: flex;
+          width: max-content;
+          will-change: transform;
+          animation: marquee-scroll 8s linear infinite;
+        }
+        @keyframes marquee-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
         @media (min-width: 768px) {
-          .marquee-track {
+          .marquee-inner {
             animation-duration: 25s;
           }
         }
