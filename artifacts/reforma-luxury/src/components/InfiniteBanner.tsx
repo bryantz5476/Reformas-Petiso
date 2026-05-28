@@ -38,11 +38,11 @@ export default function InfiniteBanner() {
           to   { transform: translateX(-33.3333%); }
         }
         .marquee-track {
-          animation: marquee-scroll 18s linear infinite;
+          animation: marquee-scroll 8s linear infinite;
         }
         @media (min-width: 768px) {
           .marquee-track {
-            animation-duration: 35s;
+            animation-duration: 30s;
           }
         }
       `}</style>
