@@ -2,6 +2,7 @@
   "name": "workspace",
   "version": "0.0.0",
   "private": true,
+  "packageManager": "pnpm@9.15.4",
   "scripts": {
     "dev": "pnpm --filter @workspace/reforma-luxury dev",
     "build": "pnpm --filter @workspace/reforma-luxury build"
