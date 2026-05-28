@@ -45,9 +45,18 @@ const GlareButton = ({ href, children }: { href: string; children: React.ReactNo
     x.set(e.clientX - rect.left);
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <motion.a
       href={href}
+      onClick={handleClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={handleMouseMove}
