@@ -42,7 +42,7 @@ export default function InfiniteBanner() {
           display: flex;
           width: max-content;
           will-change: transform;
-          animation: marquee-scroll 8s linear infinite;
+          animation: marquee-scroll 18s linear infinite;
         }
         @keyframes marquee-scroll {
           0%   { transform: translateX(0); }
