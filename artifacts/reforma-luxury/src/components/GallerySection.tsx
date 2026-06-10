@@ -3,12 +3,12 @@ import { useState, useEffect, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
-  { img: "/images/gallery-1.png", title: "Cocina Slate",    location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1 md:col-span-2 md:row-span-2" },
-  { img: "/images/gallery-2.png", title: "Baño Onyx",       location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
-  { img: "/images/gallery-3.png", title: "Salón Zenith",    location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
-  { img: "/images/gallery-4.png", title: "Comedor Aura",    location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1 md:col-span-2" },
-  { img: "/images/gallery-5.png", title: "Cocina Pure",     location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
-  { img: "/images/gallery-6.png", title: "Suite Nocturne",  location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery1.jpeg", title: "Cocina Slate",    location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1 md:col-span-2 md:row-span-2" },
+  { img: "/images/gallery2.jpeg", title: "Baño Onyx",       location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery3.jpeg", title: "Salón Zenith",    location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery4.jpeg", title: "Comedor Aura",    location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1 md:col-span-2" },
+  { img: "/images/gallery5.jpeg", title: "Cocina Pure",     location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
+  { img: "/images/gallery6.jpeg", title: "Suite Nocturne",  location: "Vitoria-Gasteiz", className: "col-span-1 row-span-1" },
 ];
 
 function Lightbox({ index, onClose, onPrev, onNext }: {
