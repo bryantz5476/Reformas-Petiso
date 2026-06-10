@@ -111,6 +111,15 @@ export default function ContactSection() {
         <div className="bg-card border border-border/50 rounded-3xl p-8 md:p-12 shadow-2xl">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {/* Honeypot anti-bot — invisible para humanos, Formspree lo descarta si está relleno */}
+              <input
+                type="text"
+                name="_gotcha"
+                tabIndex={-1}
+                aria-hidden="true"
+                autoComplete="off"
+                style={{ position: "absolute", opacity: 0, pointerEvents: "none", width: 0, height: 0 }}
+              />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <FormField
