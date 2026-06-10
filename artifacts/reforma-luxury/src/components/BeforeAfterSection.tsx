@@ -28,7 +28,7 @@ export default function BeforeAfterSection() {
               Antes
             </div>
             <img 
-              src="/images/before.png" 
+              src="/images/antes.jpeg"
               alt="Antes de la reforma" 
               loading="lazy"
               decoding="async"
@@ -48,7 +48,7 @@ export default function BeforeAfterSection() {
               }}
             >
               <img 
-                src="/images/after.png" 
+                src="/images/despues.jpeg"
                 alt="Después de la reforma" 
                 loading="lazy"
                 decoding="async"
