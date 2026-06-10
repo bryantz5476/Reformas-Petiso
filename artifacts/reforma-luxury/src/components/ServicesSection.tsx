@@ -10,7 +10,7 @@ const services = [
     description:
       "Espacios culinarios donde la funcionalidad se funde con la alta estética. Encimeras de piedra natural, cabinetería a medida y electrodomésticos de alta gama perfectamente integrados.",
     brands: ["Encimeras", "Azulejos", "Muebles a Medida", "Electrodomésticos"],
-    image: "/images/gallery-1.png",
+    image: "/images/cocina.jpeg",
   },
   {
     index: "02",
@@ -19,7 +19,7 @@ const services = [
     description:
       "Santuarios de bienestar privados. Piedra natural, iluminación arquitectónica indirecta y grifería de autor que convierte cada mañana en un ritual de precisión y serenidad.",
     brands: ["Sanitarios", "Grifería", "Revestimientos", "Iluminación"],
-    image: "/images/gallery-2.png",
+    image: "/images/baño.jpeg",
   },
   {
     index: "03",
@@ -28,7 +28,7 @@ const services = [
     description:
       "Rediseño completo del hogar. Redistribución de espacios, optimización de luz natural, instalaciones de nueva generación y acabados inmaculados. Del plano a la llave en manos.",
     brands: ["Arquitectura", "Interiorismo", "Gestión", "Llave en mano"],
-    image: "/images/gallery-3.png",
+    image: "/images/reformaintegral.jpeg",
   },
   {
     index: "04",
@@ -37,7 +37,7 @@ const services = [
     description:
       "Instalación, reparación y renovación completa de redes de agua. Grifería de alta gama, sistemas de calefacción, tuberías y saneamiento ejecutados con la máxima precisión y garantía.",
     brands: ["Grifería", "Tuberías", "Calefacción", "Saneamiento"],
-    image: "/images/fontaneria.jpg",
+    image: "/images/fontaneria.jpeg",
   },
 ];
 
