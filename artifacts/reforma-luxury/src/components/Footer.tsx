@@ -18,11 +18,11 @@ export default function Footer() {
               Construcción y reformas de lujo en Vitoria‑Gasteiz.
             </p>
             <a
-              href="mailto:bryanzevallospersonal@gmail.com"
+              href="mailto:ramduart.r@gmail.com"
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-white transition-colors duration-200 mt-1"
             >
               <Mail size={14} className="shrink-0" />
-              bryanzevallospersonal@gmail.com
+              ramduart.r@gmail.com
             </a>
           </div>
 
