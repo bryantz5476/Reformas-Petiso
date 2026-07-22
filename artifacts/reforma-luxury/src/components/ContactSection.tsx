@@ -63,7 +63,7 @@ export default function ContactSection() {
 
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => {
-      const res = await fetch("https://formspree.io/f/xaqklqvk", {
+      const res = await fetch("https://formspree.io/f/mbdnaaje", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
